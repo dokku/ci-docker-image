@@ -40,12 +40,5 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-      - name: Update repo description
-        # yamllint disable-line rule:line-length
-        uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d  # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: dokku/ci-docker-image
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
