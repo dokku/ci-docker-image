@@ -1,5 +1,5 @@
 ---
-name: push
+name: docker-push
 
 # yamllint disable-line rule:truthy
 on:
@@ -9,7 +9,7 @@ on:
       - completed
 
 jobs:
-  build:
+  docker-push:
     name: push latest
     runs-on: ubuntu-20.04
     # yamllint disable-line rule:line-length
