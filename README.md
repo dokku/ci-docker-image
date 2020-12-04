@@ -4,7 +4,7 @@ A Docker image meant for use with CI/CD pipelines
 
 ## Building
 
-```
+```text
 docker build dokku/ci-docker-image .
 ```
 
