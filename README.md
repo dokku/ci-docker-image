@@ -2,6 +2,19 @@
 
 A Docker image meant for use with CI/CD pipelines
 
+## Supported CI Systems
+
+Assuming a Docker image can be run as a CI task with environment variables
+injected, the following CI systems will have their variables automatically detected:
+
+- [circleci](https://circleci.com/)
+- [cloudbees](https://www.cloudbees.com/)
+- [drone](https://www.drone.io/)
+- [github actions](https://github.com/features/actions)
+- [gitlab-ci](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
+- [semaphoreci](https://semaphoreci.com/)
+- [travisci](https://travis-ci.com/)
+
 ## Usage
 
 This image provides two binaries for external usage:
