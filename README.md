@@ -2,11 +2,12 @@
 
 A Docker image meant for use with CI/CD pipelines
 
-## Building
+## Usage
 
-```text
-docker build dokku/ci-docker-image .
-```
+This image provides two binaries for external usage:
+
+- `dokku-deploy`: Triggers an app deploy at the configured `GIT_REMOTE_URL`
+- `dokku-unlock`: Unlocks deploys for an app at the configured `GIT_REMOTE_URL`
 
 ## Configuration
 
@@ -38,9 +39,8 @@ The following environment variables are supported:
     description: A private SSH key that has push acces to your Dokku instance
     required: true
 
-## Usage
+## Building
 
-This image provides two binaries for external usage:
-
-- `dokku-deploy`: Triggers an app deploy at the configured `GIT_REMOTE_URL`
-- `dokku-unlock`: Unlocks deploys for an app at the configured `GIT_REMOTE_URL`
+```text
+docker build dokku/ci-docker-image .
+```
