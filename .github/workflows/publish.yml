@@ -16,14 +16,13 @@ jobs:
     if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master'
     steps:
       # yamllint disable-line rule:line-length
-      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
-        # v1.0.0 => 967ed83efa565c257675ed70cfe5231f062ddd94
+      - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94 # v1.0.0 => 967ed83efa565c257675ed70cfe5231f062ddd94
       - name: Checkout
         uses: actions/checkout@v2
       - name: Generate docker metadata
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
-        # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        # yamllint disable-line rule:line-length
+        uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677 # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
         with:
           images: dokku/ci-docker-image
       - name: Set up QEMU
@@ -45,8 +44,7 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
       - name: Update repo description
         # yamllint disable-line rule:line-length
-        uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
-        # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
+        uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
