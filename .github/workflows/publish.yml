@@ -3,9 +3,13 @@ name: push
 
 # yamllint disable-line rule:truthy
 on:
-  push:
+  workflow_run:
+    workflows: ["lint"]
     branches:
       - master
+    types:
+      - completed
+      - requested
 
 jobs:
   build:
