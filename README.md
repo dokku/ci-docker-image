@@ -49,7 +49,7 @@ The following environment variables are supported:
   - required: false
   - default: ''
 - `CI_COMMIT`
-  - description: The commit sha that triggered the deploy. Interpolated if unavailable.
+  - description: The commit sha that will be pushed. Interpolated if unavailable.
   - required: false
   - default: ''
 - `COMMAND`:
