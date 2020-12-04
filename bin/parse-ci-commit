@@ -4,27 +4,27 @@ set -e
 value="$CI_COMMIT"
 if [ -n "$CI_COMMIT" ]; then
   true
-elif [ -n "$CI_COMMIT_SHA" ]; then
-  # gitlab-ci
-  value="$CI_COMMIT_SHA"
-elif [ -n "$GITHUB_SHA" ]; then
-  # github actions
-  value="$GITHUB_SHA"
 elif [ -n "$CIRCLE_SHA1" ]; then
   # circleci
   value="$CIRCLE_SHA1"
-elif [ -n "$TRAVIS_COMMIT" ]; then
-  # travisci
-  value="$TRAVIS_COMMIT"
-elif [ -n "$SEMAPHORE_GIT_SHA" ]; then
-  # semaphoreci
-  value="$SEMAPHORE_GIT_SHA"
 elif [ -n "$CI_COMMIT_ID" ]; then
   # cloudbees
   value="$CI_COMMIT_ID"
 elif [ -n "$DRONE_COMMIT_SHA" ]; then
   # drone
   value="$DRONE_COMMIT_SHA"
+elif [ -n "$GITHUB_SHA" ]; then
+  # github actions
+  value="$GITHUB_SHA"
+elif [ -n "$CI_COMMIT_SHA" ]; then
+  # gitlab-ci
+  value="$CI_COMMIT_SHA"
+elif [ -n "$SEMAPHORE_GIT_SHA" ]; then
+  # semaphoreci
+  value="$SEMAPHORE_GIT_SHA"
+elif [ -n "$TRAVIS_COMMIT" ]; then
+  # travisci
+  value="$TRAVIS_COMMIT"
 else
   exit 0
 fi
