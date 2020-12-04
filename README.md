@@ -41,38 +41,38 @@ docker run --rm -v="$PWD:/app" --env-file=.env dokku/ci-docker-image dokku-unloc
 The following environment variables are supported:
 
 - `BRANCH`:
-    description: The branch to deploy when pushing to Dokku
-    required: false
-    default: ''master
+  - description: The branch to deploy when pushing to Dokku
+  - required: false
+  - default: ''master
 - `CI_BRANCH_NAME`
-    description: The branch name that triggered the deploy. Interpolated if unavailable.
-    required: false
-    default: ''
+  - description: The branch name that triggered the deploy. Interpolated if unavailable.
+  - required: false
+  - default: ''
 - `CI_COMMIT`
-    description: The commit sha that triggered the deploy. Interpolated if unavailable.
-    required: false
-    default: ''
+  - description: The commit sha that triggered the deploy. Interpolated if unavailable.
+  - required: false
+  - default: ''
 - `COMMAND`:
-    description: The command to run for the action
-    required: false
-    default: 'deploy'
+  - description: The command to run for the action
+  - required: false
+  - default: 'deploy'
 - `GIT_PUSH_FLAGS:`
-    description: The dokku app's git repository url (in SSH format)
-    required: true
+  - description: The dokku app's git repository url (in SSH format)
+  - required: true
 - `GIT_REMOTE_URL:`
-    description: A string containing a set of flags to set on push
-    required: false
+  - description: A string containing a set of flags to set on push
+  - required: false
 - `REVIEW_APP_NAME`:
-    description: The name of the review app to create or destroy
-    required: false
-    default: 'review-$APP_NAME-$CI_BRANCH_NAME'
+  - description: The name of the review app to create or destroy
+  - required: false
+  - default: 'review-$APP_NAME-$CI_BRANCH_NAME'
 - `SSH_HOST_KEY`:
-    description: The results of running `ssh-keyscan -t rsa $HOST`
-    required: false
-    default: ''
+  - description: The results of running `ssh-keyscan -t rsa $HOST`
+  - required: false
+  - default: ''
 - `SSH_PRIVATE_KEY`:
-    description: A private SSH key that has push acces to your Dokku instance
-    required: true
+  - description: A private SSH key that has push acces to your Dokku instance
+  - required: true
 
 ## Building
 
