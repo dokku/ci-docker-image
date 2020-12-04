@@ -18,7 +18,11 @@ The following environment variables are supported:
     required: false
     default: ''master
 - `CI_BRANCH_NAME`
-    description: The branch name that triggered the deploy
+    description: The branch name that triggered the deploy. Interpolated if unavailable.
+    required: false
+    default: ''
+- `CI_COMMIT`
+    description: The commit sha that triggered the deploy. Interpolated if unavailable.
     required: false
     default: ''
 - `COMMAND`:
