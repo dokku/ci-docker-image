@@ -5,8 +5,6 @@ name: push
 on:
   workflow_run:
     workflows: ["lint"]
-    branches:
-      - master
     types:
       - completed
 
@@ -14,16 +12,26 @@ jobs:
   build:
     name: push latest
     runs-on: ubuntu-20.04
-    if: github.event.workflow_run.conclusion == 'success'
+    # yamllint disable-line rule:line-length
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'master'
     steps:
       # yamllint disable-line rule:line-length
       - uses: haya14busa/action-workflow_run-status@967ed83efa565c257675ed70cfe5231f062ddd94
         # v1.0.0 => 967ed83efa565c257675ed70cfe5231f062ddd94
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate docker metadata
+        id: docker_meta
+        uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        with:
+          images: dokku/ci-docker-image
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -32,9 +40,11 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          push: true
-          tags: dokku/ci-docker-image:latest
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
       - name: Update repo description
+        # yamllint disable-line rule:line-length
         uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
         # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
         with:
