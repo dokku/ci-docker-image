@@ -35,6 +35,7 @@ if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy'
       exit 1
     fi
 
+    CI_BRANCH_NAME="$(echo "$CI_BRANCH_NAME" | tr '[:upper:]' '[:lower:]' | sed "s/[[:alpha:].-]/-/g")"
     REVIEW_APP_NAME="review-${app_name}-${CI_BRANCH_NAME}"
     log-info "No review app name specified, using $REVIEW_APP_NAME"
   fi
