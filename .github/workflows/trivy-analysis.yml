@@ -1,8 +1,13 @@
+---
 name: build
+
+# yamllint disable-line rule:truthy
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
+
 jobs:
   build:
     name: Build
