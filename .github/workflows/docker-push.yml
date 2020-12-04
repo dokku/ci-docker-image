@@ -20,18 +20,18 @@ jobs:
         run: |
           push_enabled=false
           if [[ '${{ github.event.workflow_run.head_branch }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
-            echo "Detected semver tag"
+            echo "::warning ::Detected semver tag"
             push_enabled=true
           elif [[ '${{ github.event.workflow_run.head_branch }}' == "master" ]]; then
-            echo "Detected master branch"
+            echo "::warning ::Detected master branch"
             push_enabled=true
           else
-            echo "Unable to detect semver tag or master branch"
+            echo "::warning ::Unable to detect semver tag or master branch"
             push_enabled=false
           fi
 
           if [[ '${{ github.event.workflow_run.conclusion }}' != 'success' ]]; then
-            echo "Unable to detect successful lint workflow_run conclusion"
+            echo "::warning ::Unable to detect successful lint workflow_run conclusion"
             push_enabled=false
           fi
 
