@@ -18,13 +18,13 @@ elif [ -n "$TRAVIS_BRANCH" ]; then
   value="$TRAVIS_BRANCH"
 elif [ -n "$SEMAPHORE_GIT_BRANCH" ]; then
   # semaphoreci
-  value="SEMAPHORE_GIT_BRANCH"
+  value="$SEMAPHORE_GIT_BRANCH"
 elif [ -n "$CI_BRANCH" ]; then
   # cloudbees
-  value="CI_BRANCH"
+  value="$CI_BRANCH"
 elif [ -n "$DRONE_COMMIT_BRANCH" ]; then
   # drone
-  value="DRONE_COMMIT_BRANCH"
+  value="$DRONE_COMMIT_BRANCH"
 else
   exit 0
 fi
