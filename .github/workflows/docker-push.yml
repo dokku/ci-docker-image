@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       push-enabled: ${{ steps.check.outputs.push-enabled }}
+      docker-image-tag: ${{ steps.check.outputs.docker-image-tag }}
     steps:
       - name: Check if push allowed
         id: check
