@@ -20,7 +20,7 @@ jobs:
       - name: Generate docker metadata
         id: docker_meta
         # yamllint disable-line rule:line-length
-        uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677 # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677  # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
         with:
           images: dokku/ci-docker-image
       - name: Set up QEMU
@@ -42,7 +42,7 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
       - name: Update repo description
         # yamllint disable-line rule:line-length
-        uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
+        uses: peter-evans/dockerhub-description@1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d  # v2.4.1 => 1d0dd5623cbe23a2d92d8cbc6d3977a7e1c96b0d
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
