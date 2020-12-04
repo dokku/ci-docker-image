@@ -5,7 +5,8 @@ A Docker image meant for use with CI/CD pipelines
 ## Supported CI Systems
 
 Assuming a Docker image can be run as a CI task with environment variables
-injected, the following CI systems will have their variables automatically detected:
+injected, the following CI systems will have their variables automatically
+detected:
 
 - [circleci](https://circleci.com/)
 - [cloudbees](https://www.cloudbees.com/)
@@ -21,6 +22,19 @@ This image provides two binaries for external usage:
 
 - `dokku-deploy`: Triggers an app deploy at the configured `GIT_REMOTE_URL`
 - `dokku-unlock`: Unlocks deploys for an app at the configured `GIT_REMOTE_URL`
+
+To run either binary, the following `docker` command can be used from a
+directory containing a non-shallow clone of the repository being deployed:
+
+```shell
+# where the `.env` file contains `GIT_REMOTE_URL` and `SSH_PRIVATE_KEY`
+
+# deploy
+docker run --rm -v="$PWD:/app" --env-file=.env dokku/ci-docker-image dokku-deploy
+
+# unlock
+docker run --rm -v="$PWD:/app" --env-file=.env dokku/ci-docker-image dokku-unlock
+```
 
 ## Configuration
 
