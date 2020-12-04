@@ -1,0 +1,32 @@
+#!/bin/sh -l
+set -e
+
+value="$CI_BRANCH_NAME"
+if [ -n "$CI_BRANCH_NAME" ]; then
+  true
+elif [ -n "$CI_COMMIT_REF_NAME" ]; then
+  # gitlab-ci
+  value="$CI_COMMIT_REF_NAME"
+elif [ -n "$GITHUB_REF" ]; then
+  # github actions
+  value="${GITHUB_REF#refs/heads/}"
+elif [ -n "$CIRCLE_BRANCH" ]; then
+  # circleci
+  value="$CIRCLE_BRANCH"
+elif [ -n "$TRAVIS_BRANCH" ]; then
+  # travisci
+  value="$TRAVIS_BRANCH"
+elif [ -n "$SEMAPHORE_GIT_BRANCH" ]; then
+  # semaphoreci
+  value="SEMAPHORE_GIT_BRANCH"
+elif [ -n "$CI_BRANCH" ]; then
+  # cloudbees
+  value="CI_BRANCH"
+elif [ -n "$DRONE_COMMIT_BRANCH" ]; then
+  # drone
+  value="DRONE_COMMIT_BRANCH"
+else
+  exit 0
+fi
+
+echo "$value" | tr '[:upper:]' '[:lower:]' | sed "s/[[:alpha:].-]/-/g"
