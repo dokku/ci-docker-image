@@ -3,15 +3,42 @@ set -e
 
 setup-ssh
 
-if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy' ]; then
-  if [ -z "$REVIEW_APP_NAME" ]; then
-    log-error "No review app name specified"
-    exit 1
-  fi
-fi
-
 app_name="$(parse-app-name)"
 ssh_remote="ssh://dokku@$(parse-ssh-host):$(parse-ssh-port)"
+
+if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy' ]; then
+  if [ -z "$REVIEW_APP_NAME" ]; then
+    CI_BRANCH_NAME=""
+    if [ -n "$CI_COMMIT_REF_NAME" ]; then
+      # gitlab-ci
+      CI_BRANCH_NAME="$CI_COMMIT_REF_NAME"
+    elif [ -n "$GITHUB_REF" ]; then
+      # github actions
+      CI_BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+    elif [ -n "$CIRCLE_BRANCH" ]; then
+      # circleci
+      CI_BRANCH_NAME="$CIRCLE_BRANCH"
+    elif [ -n "$TRAVIS_BRANCH" ]; then
+      # travisci
+      CI_BRANCH_NAME="$TRAVIS_BRANCH"
+    elif [ -n "$SEMAPHORE_GIT_BRANCH" ]; then
+      # semaphoreci
+      CI_BRANCH_NAME="SEMAPHORE_GIT_BRANCH"
+    elif [ -n "$CI_BRANCH" ]; then
+      # cloudbees
+      CI_BRANCH_NAME="CI_BRANCH"
+    elif [ -n "$DRONE_COMMIT_BRANCH" ]; then
+      # drone
+      CI_BRANCH_NAME="DRONE_COMMIT_BRANCH"
+    else
+      log-error "Unable to detect branch name and cannot generate review app name"
+      exit 1
+    fi
+
+    REVIEW_APP_NAME="review-${app_name}-${CI_BRANCH_NAME}"
+    log-info "No review app name specified, using $REVIEW_APP_NAME"
+  fi
+fi
 
 if [ "$COMMAND" = "review-app:destroy" ]; then
   log-info "Destroying review app '${REVIEW_APP_NAME}'"

@@ -16,8 +16,12 @@ The following environment variables are supported:
 - `BRANCH`:
     description: The branch to deploy when pushing to Dokku
     required: false
-    default: "master"
-- `command`:
+    default: ''master
+- `CI_BRANCH_NAME`
+    description: The branch name that triggered the deploy
+    required: false
+    default: ''
+- `COMMAND`:
     description: The command to run for the action
     required: false
     default: 'deploy'
@@ -30,11 +34,11 @@ The following environment variables are supported:
 - `REVIEW_APP_NAME`:
     description: The name of the review app to create or destroy
     required: false
-    default: ''
+    default: 'review-$APP_NAME-$CI_BRANCH_NAME'
 - `SSH_HOST_KEY`:
     description: The results of running `ssh-keyscan -t rsa $HOST`
     required: false
-    default: ""
+    default: ''
 - `SSH_PRIVATE_KEY`:
     description: A private SSH key that has push acces to your Dokku instance
     required: true
