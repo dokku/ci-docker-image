@@ -74,6 +74,6 @@ jobs:
           tags: dokku/ci-docker-image:${{ needs.push-enabled.outputs.docker-image-tag }}
           labels: |
             ${{ steps.docker_meta.outputs.labels }}
-            org.opencontainers.image.version=${{ needs.push-enabled.outputs.docker-image-tag }}
+            org.opencontainers.image.version=${{ github.event.workflow_run.head_branch }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
