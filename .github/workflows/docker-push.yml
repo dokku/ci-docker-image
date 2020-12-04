@@ -18,9 +18,11 @@ jobs:
       - name: Check if push allowed
         id: check
         run: |
+          image_tag=latest
           push_enabled=false
           if [[ '${{ github.event.workflow_run.head_branch }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
+            image_tag='${{ github.event.workflow_run.head_branch }}'
             push_enabled=true
           elif [[ '${{ github.event.workflow_run.head_branch }}' == "master" ]]; then
             echo -e "\u001b[32mDetected master branch\u001b[0m"
@@ -38,6 +40,7 @@ jobs:
           fi
 
           echo "::set-output name=push-enabled::${push_enabled}"
+          echo "::set-output name=docker-image-tag::${image_tag}"
 
   docker-push:
     name: push latest
@@ -67,7 +70,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
+          tags: dokku/ci-docker-image:${{ needs.push-enabled.outputs.docker-image-tag }}
+          labels: |
+            ${{ steps.docker_meta.outputs.labels }}
+            org.opencontainers.image.version=${{ needs.push-enabled.outputs.docker-image-tag }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
