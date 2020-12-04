@@ -9,6 +9,15 @@ on:
       - completed
 
 jobs:
+  debug:
+    name: debug
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo ${{ github.event.workflow_run.conclusion }}
+      - run: echo ${{ github.event.workflow_run.head_branch }}
+      - run: echo ${{ github.ref }}
+      - run: echo ${{ startsWith(github.ref, 'refs/tags/') }}
+
   docker-push:
     name: push latest
     runs-on: ubuntu-20.04
