@@ -1,5 +1,5 @@
 ---
-name: build
+name: trivy-analysis
 
 # yamllint disable-line rule:truthy
 on:
@@ -9,8 +9,8 @@ on:
   pull_request:
 
 jobs:
-  build:
-    name: Build
+  trivy-analysis:
+    name: trivy-analysis
     runs-on: "ubuntu-18.04"
     steps:
       - name: Checkout code
