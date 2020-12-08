@@ -47,4 +47,5 @@ if [ -n "$REVIEW_APP_NAME" ] && [ "$app_name" != "$REVIEW_APP_NAME" ]; then
   GIT_REMOTE_URL="${GIT_REMOTE_URL%"/$app_name"}/${REVIEW_APP_NAME}"
 fi
 
-git push "$GIT_PUSH_FLAGS" "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
+# shellcheck disable=SC2086
+git push $GIT_PUSH_FLAGS "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
