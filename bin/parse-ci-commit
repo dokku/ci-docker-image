@@ -4,6 +4,9 @@ set -e
 value="$CI_COMMIT"
 if [ -n "$CI_COMMIT" ]; then
   true
+elif [ -n "$PLUGIN_CI_COMMIT" ]; then
+  # drone plugin
+  value="$PLUGIN_CI_COMMIT"
 elif [ -n "$CIRCLE_SHA1" ]; then
   # circleci
   value="$CIRCLE_SHA1"
