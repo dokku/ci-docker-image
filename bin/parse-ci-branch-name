@@ -4,6 +4,9 @@ set -e
 value="$CI_BRANCH_NAME"
 if [ -n "$CI_BRANCH_NAME" ]; then
   true
+elif [ -n "$PLUGIN_CI_BRANCH_NAME" ]; then
+  # drone plugin
+  value="$PLUGIN_CI_BRANCH_NAME"
 elif [ -n "$CIRCLE_BRANCH" ]; then
   # circleci
   value="$CIRCLE_BRANCH"

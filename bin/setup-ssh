@@ -1,6 +1,13 @@
 #!/bin/sh -l
 set -e
 
+if [ -n "$PLUGIN_SSH_HOST_KEY" ]; then
+  export SSH_HOST_KEY="$PLUGIN_SSH_HOST_KEY"
+fi
+if [ -n "$PLUGIN_SSH_PRIVATE_KEY" ]; then
+  export SSH_PRIVATE_KEY="$PLUGIN_SSH_PRIVATE_KEY"
+fi
+
 log-info "Setting up SSH Key"
 
 mkdir -p /root/.ssh
