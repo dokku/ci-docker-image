@@ -36,7 +36,7 @@ if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy'
   fi
 fi
 
-if [ "$COMMAND" = "review-app:destroy" ]; then
+if [ "$COMMAND" = "review-apps:destroy" ]; then
   log-info "Destroying review app '${REVIEW_APP_NAME}'"
   ssh "$ssh_remote" -- --force apps:destroy "$REVIEW_APP_NAME"
   exit 0
