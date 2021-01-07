@@ -73,6 +73,9 @@ The following environment variables are supported:
 - `SSH_PRIVATE_KEY`:
   - description: A private SSH key that has push acces to your Dokku instance
   - required: true
+- `APP_CONFIG`:
+  - description: App environment variables in form of `KEY1=VALUE1 [KEY2=VALUE2 ...]`
+  - required: false
 
 ## Building
 

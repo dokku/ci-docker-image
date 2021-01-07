@@ -16,6 +16,9 @@ fi
 if [ -n "$PLUGIN_REVIEW_APP_NAME" ]; then
   export REVIEW_APP_NAME="$PLUGIN_REVIEW_APP_NAME"
 fi
+if [ -n "$PLUGIN_APP_CONFIG" ]; then
+  export APP_CONFIG="$PLUGIN_APP_CONFIG"
+fi
 
 setup-ssh
 
@@ -55,6 +58,17 @@ fi
 if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
+fi
+
+if [ -n "$APP_CONFIG" ]; then
+  log-info "Setting App Config"
+  if [ -n "$REVIEW_APP_NAME" ]; then
+    config_app_name="$REVIEW_APP_NAME"
+  else
+    config_app_name="$app_name"
+  fi
+  # shellcheck disable=SC2086
+  ssh "$ssh_remote" -- config:set --no-restart "$config_app_name" $APP_CONFIG
 fi
 
 log-info "Pushing to Dokku Host"
