@@ -17,7 +17,7 @@ if [ -n "$PLUGIN_REVIEW_APP_NAME" ]; then
   export REVIEW_APP_NAME="$PLUGIN_REVIEW_APP_NAME"
 fi
 
-if [[ -z "$BRANCH" ]]; then
+if [ -z "$BRANCH" ]; then
   BRANCH="master"
 fi
 
