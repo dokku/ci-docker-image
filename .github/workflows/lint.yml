@@ -12,8 +12,8 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run hadolint
-        uses: brpaz/hadolint-action@eb9b96be611b84830aa1babacfb7070ecd2a8b1b
-        # v1.1.0 => eb9b96be611b84830aa1babacfb7070ecd2a8b1b
+        uses: brpaz/hadolint-action@1623ba61710b974b55ba455930e6f2c8ef919778
+        # v1.3.1 => 1623ba61710b974b55ba455930e6f2c8ef919778
 
   markdown-lint:
     name: markdown-lint
@@ -22,8 +22,8 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run markdown-lint
-        uses: avto-dev/markdown-lint@6e6d4393411fbaae3c3aeee5661ba84a0352ed3b
-        # v1.4.0 => 6e6d4393411fbaae3c3aeee5661ba84a0352ed3b
+        uses: avto-dev/markdown-lint@04d43ee9191307b50935a753da3b775ab695eceb
+        # v1.5.0 => 04d43ee9191307b50935a753da3b775ab695eceb
         with:
           config: '.github/linters/.markdown-lint.yml'
           args: './README.md'
@@ -45,8 +45,8 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run shfmt
-        uses: luizm/action-sh-checker@802b81f66b6c31ea423aa41ad4f49f4b7b869272
-        # v0.1.8 => 802b81f66b6c31ea423aa41ad4f49f4b7b869272
+        uses: luizm/action-sh-checker@164368daf52a9126460854f9c0de00abc079a350
+        # v0.1.13 => 164368daf52a9126460854f9c0de00abc079a350
         env:
           SHFMT_OPTS: -l -d -i 2
         with:
