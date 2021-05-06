@@ -56,10 +56,10 @@ The following environment variables are supported:
   - description: The command to run for the action
   - required: false
   - default: 'deploy'
-- `GIT_PUSH_FLAGS:`
+- `GIT_REMOTE_URL:`
   - description: The dokku app's git repository url (in SSH format)
   - required: true
-- `GIT_REMOTE_URL:`
+- `GIT_PUSH_FLAGS:`
   - description: A string containing a set of flags to set on push
   - required: false
 - `REVIEW_APP_NAME`:
