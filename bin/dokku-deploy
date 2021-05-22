@@ -46,6 +46,16 @@ if [ "$COMMAND" = "review-apps:destroy" ]; then
   exit 0
 fi
 
+if [ "$COMMAND" = "git:from-image" ]; then
+  if [-z "$IMAGE_NAME"]; then
+    log-error "No docker image specified"
+    exit 1
+  fi
+
+  ssh "$ssh_remote" -- git:from-image "$app_name" "$IMAGE_NAME"
+  exit 0
+fi
+
 if [ -n "$COMMAND" ] && [ "$COMMAND" != "review-apps:create" ] && [ "$COMMAND" != "deploy" ]; then
   log-error "Invalid command specified"
   exit 1
@@ -55,6 +65,8 @@ if [ -z "$commit_sha" ]; then
   log-error "Unable to detect commit sha"
   exit 1
 fi
+
+
 
 if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
