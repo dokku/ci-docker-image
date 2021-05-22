@@ -66,8 +66,6 @@ if [ -z "$commit_sha" ]; then
   exit 1
 fi
 
-
-
 if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
