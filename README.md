@@ -79,3 +79,53 @@ The following environment variables are supported:
 ```text
 docker build dokku/ci-docker-image .
 ```
+
+
+
+## Examples
+
+Where `DOKKU_SERVER_IP` is the URL or IP Address of the host running dokku.
+and `DOKKU_APP_NAME` is the app which has been created on dokku.
+
+### Basic Deploy using the Git Repository of the CI
+Using Gitlab-CI:
+```yaml
+deploy:
+  stage: deploy
+  image: dokku/ci-docker-image
+  variables:
+    GIT_DEPTH: 0
+    GIT_REMOTE_URL: ssh://dokku@${DOKKU_SERVER_IP}:22/${DOKKU_APP_NAME}
+  script:
+    - dokku-deploy
+  after_script:
+    - dokku-unlock
+```
+
+
+### Deploying an Existing Docker Image
+To deploy an existing docker image rather than the git repository. For instance, if the docker image is built in a previous step of the pipeline.
+
+Replace `existing/docker-image:$VERSION` with your own docker image and tag. 
+
+Using Gitlab-CI:
+```yaml
+deploy:
+  stage: deploy
+  image: dokku/ci-docker-image
+  variables:
+    GIT_STRATEGY: none
+    GIT_REMOTE_URL: ssh://dokku@${DOKKU_SERVER_IP}:22/${DOKKU_APP_NAME}
+    COMMAND: git:from-image
+  before_script:
+    # version as artifact from previous pipeline step
+    - export VERSION=$(cat ./version)  
+    # must use specific version deploying latest on top of latest will not trigger a deploy
+    - export IMAGE_NAME=existing/docker-image:$VERSION 
+  script:
+    - dokku-deploy
+  after_script:
+    - dokku-unlock
+
+```
+
