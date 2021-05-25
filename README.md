@@ -71,9 +71,11 @@ The following environment variables are supported:
   - required: false
   - default: ''
 - `SSH_PRIVATE_KEY`:
-  - description: A private SSH key that has push acces to your Dokku instance
+  - description: A private SSH key that has push access to your Dokku instance
   - required: true
-
+- `IMAGE_NAME`:
+  - description: A docker image name/tag to deploy to the Dokku instance
+  - required: true if `COMMAND` is set to `git:from-image`, otherwise false
 ## Building
 
 ```text
