@@ -12,8 +12,8 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run hadolint
-        uses: brpaz/hadolint-action@1623ba61710b974b55ba455930e6f2c8ef919778
-        # v1.3.1 => 1623ba61710b974b55ba455930e6f2c8ef919778
+        uses: hadolint/hadolint-action@v1.5.0@c27bd9edc1e95eed30474db8f295ff5807ebca14
+        # v1.5.0 => c27bd9edc1e95eed30474db8f295ff5807ebca14
 
   markdown-lint:
     name: markdown-lint
@@ -35,9 +35,10 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run shellcheck
-        uses: ludeeus/action-shellcheck@d586102c117f97e63d7e3b56629d269efc9a7c60
-        # 1.0.0 => d586102c117f97e63d7e3b56629d269efc9a7c60
-
+        uses: ludeeus/action-shellcheck@94e0aab03ca135d11a35e5bfc14e6746dc56e7e9
+        # 1.1.0 => 94e0aab03ca135d11a35e5bfc14e6746dc56e7e9
+        env:
+          SHELLCHECK_OPTS: -s bash
   shfmt:
     name: shfmt
     runs-on: ubuntu-20.04
@@ -45,12 +46,14 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run shfmt
-        uses: luizm/action-sh-checker@164368daf52a9126460854f9c0de00abc079a350
-        # v0.1.13 => 164368daf52a9126460854f9c0de00abc079a350
+        uses: luizm/action-sh-checker@7f44869033b40ee4ffe7dc76c87a1bc66e3d025a
+        # v0.3.0 => 7f44869033b40ee4ffe7dc76c87a1bc66e3d025a
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SHFMT_OPTS: -l -d -i 2
         with:
           sh_checker_shellcheck_disable: true
+          sh_checker_comment: true
 
   yamllint:
     name: yamllint
@@ -59,7 +62,7 @@ jobs:
       - name: Clone
         uses: actions/checkout@v2
       - name: Run yamllint
-        uses: ibiqlik/action-yamllint@b2aeacc1b7eeb8c23e84bba320d04fb5d6a323ee
-        # v3.0.0 => b2aeacc1b7eeb8c23e84bba320d04fb5d6a323ee
+        uses: ibiqlik/action-yamllint@c19bd0523a9011c3a3960fe6640a0882b59af15d
+        # v3.0.2 => c19bd0523a9011c3a3960fe6640a0882b59af15d
         with:
           config_file: '.github/linters/.yamllint.yml'
