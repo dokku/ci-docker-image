@@ -49,7 +49,7 @@ jobs:
         uses: luizm/action-sh-checker@7f44869033b40ee4ffe7dc76c87a1bc66e3d025a
         # v0.3.0 => 7f44869033b40ee4ffe7dc76c87a1bc66e3d025a
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
           SHFMT_OPTS: -l -d -i 2
         with:
           sh_checker_shellcheck_disable: true
