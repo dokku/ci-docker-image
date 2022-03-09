@@ -60,6 +60,10 @@ if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
   ssh "$ssh_remote" -- config:set --no-restart "$REVIEW_APP_NAME" REVIEW_APP_NAME="$REVIEW_APP_NAME"
+  vector_sink_opts = "aws_cloudwatch_logs://?create_missing_group=true&create_missing_stream=true"
+  vector_sink_opts += "&group_name=gt-staging-mr&stream_name=gt-staging-$REVIEW_APP_NAME"
+  vector_sink_opts += "&region=us-east-2&encoding=text"
+  ssh "$ssh_remote" -- logs:set "$REVIEW_APP_NAME" vector-sink $vector_sink_opts
 fi
 
 log-info "Pushing to Dokku Host"
