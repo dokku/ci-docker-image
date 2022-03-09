@@ -59,6 +59,7 @@ fi
 if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
+  ssh "$ssh_remote" -- config:set --no-restart "$REVIEW_APP_NAME" REVIEW_APP_NAME="$REVIEW_APP_NAME"
 fi
 
 log-info "Pushing to Dokku Host"
