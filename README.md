@@ -38,7 +38,7 @@ docker run --rm -v="$PWD:/app" --env-file=.env dokku/ci-docker-image dokku-deplo
 docker run --rm -v="$PWD:/app" --env-file=.env dokku/ci-docker-image dokku-unlock
 ```
 
-## Configuration
+### Configuration
 
 The following environment variables are supported:
 
@@ -87,6 +87,30 @@ The following environment variables are supported:
 - `SSH_PRIVATE_KEY`:
   - description: A private SSH key that has push acces to your Dokku instance
   - required: true
+
+### Hooks
+
+#### bin/ci-pre-deploy
+
+If the file `bin/ci-pre-deploy` exists, it will be triggered after any app setup
+but before the app is deployed. This can be used to preconfigure the remote
+app prior to the actual deploy, but within the context of the SSH setup. The
+following environment variables are available for usage in the script:
+
+- `APP_NAME`: The name of the remote app that will be deployed. This takes
+the parsed GIT_REMOTE_URL and REVIEW_APP_NAME into account.
+- `IS_REVIEW_APP`: `true` if a review app is being deployed, `false` otherwise.
+- `SSH_REMOTE`: The parsed ssh remote url.
+
+The following is an example `bin/ci-pre-deploy` file:
+
+```shell
+#!/bin/sh -l
+if [ "$IS_REVIEW_APP" = "true" ]; then
+  ssh "$SSH_REMOTE" -- config:set "$APP_NAME" "DOMAIN=$APP_NAME.dokku.me"
+  echo "configured the review app domain"
+fi
+```
 
 ## Building
 
