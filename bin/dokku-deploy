@@ -70,10 +70,18 @@ if [ "$COMMAND" = "review-apps:create" ]; then
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
 fi
 
+is_review_app="false"
 remote_app_name="$app_name"
 if [ -n "$REVIEW_APP_NAME" ] && [ "$app_name" != "$REVIEW_APP_NAME" ]; then
+  is_review_app="true"
   remote_app_name="$REVIEW_APP_NAME"
   GIT_REMOTE_URL="${GIT_REMOTE_URL%"/$app_name"}/${REVIEW_APP_NAME}"
+fi
+
+if [ -f "bin/ci-pre-deploy" ]; then
+  log-info "Executing bin/ci-pre-deploy script"
+  chmod +x bin/ci-pre-deploy
+  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-pre-deploy
 fi
 
 if [ -n "$DEPLOY_DOCKER_IMAGE" ]; then
