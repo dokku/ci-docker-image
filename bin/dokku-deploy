@@ -13,6 +13,15 @@ fi
 if [ -n "$PLUGIN_GIT_PUSH_FLAGS" ]; then
   export GIT_PUSH_FLAGS="$PLUGIN_GIT_PUSH_FLAGS"
 fi
+if [ -n "$PLUGIN_DEPLOY_DOCKER_IMAGE" ]; then
+  export DEPLOY_DOCKER_IMAGE="$PLUGIN_DEPLOY_DOCKER_IMAGE"
+fi
+if [ -n "$PLUGIN_DEPLOY_USER_EMAIL" ]; then
+  export DEPLOY_USER_EMAIL="$PLUGIN_DEPLOY_USER_EMAIL"
+fi
+if [ -n "$PLUGIN_DEPLOY_USER_NAME" ]; then
+  export DEPLOY_USER_NAME="$PLUGIN_DEPLOY_USER_NAME"
+fi
 if [ -n "$PLUGIN_REVIEW_APP_NAME" ]; then
   export REVIEW_APP_NAME="$PLUGIN_REVIEW_APP_NAME"
 fi
@@ -61,11 +70,17 @@ if [ "$COMMAND" = "review-apps:create" ]; then
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
 fi
 
-log-info "Pushing to Dokku Host"
-
+remote_app_name="$app_name"
 if [ -n "$REVIEW_APP_NAME" ] && [ "$app_name" != "$REVIEW_APP_NAME" ]; then
+  remote_app_name="$REVIEW_APP_NAME"
   GIT_REMOTE_URL="${GIT_REMOTE_URL%"/$app_name"}/${REVIEW_APP_NAME}"
 fi
 
-# shellcheck disable=SC2086
-git push $GIT_PUSH_FLAGS "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
+if [ -n "$DEPLOY_DOCKER_IMAGE" ]; then
+  log-info "Deploying image to Dokku Host"
+  ssh "$ssh_remote" -- git:from-image "$remote_app_name" "$DEPLOY_DOCKER_IMAGE" "$DEPLOY_USER_NAME" "$DEPLOY_USER_EMAIL"
+else
+  log-info "Pushing to Dokku Host"
+  # shellcheck disable=SC2086
+  git push $GIT_PUSH_FLAGS "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
+fi
