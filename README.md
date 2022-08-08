@@ -57,7 +57,19 @@ The following environment variables are supported:
 - `COMMAND`:
   - description: The command to run for the action
   - required: false
-  - default: 'deploy'
+  - default: ''
+- `DEPLOY_DOCKER_IMAGE`:
+  - description: A docker image to deploy via `git:from-image`
+  - required: false
+  - default: ''
+- `DEPLOY_USER_NAME`:
+  - description: A username to use when deploying a docker image
+  - required: false
+  - default: ''
+- `DEPLOY_USER_EMAIL`:
+  - description: The email to use when deploying a docker image
+  - required: false
+  - default: ''
 - `GIT_REMOTE_URL:`
   - description: The dokku app's git repository url (in SSH format)
   - required: true
