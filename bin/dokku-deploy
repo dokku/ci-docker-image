@@ -86,6 +86,11 @@ if [ -f "bin/ci-pre-deploy" ]; then
   APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-pre-deploy
 fi
 
+if [[ -f ci-commit-override ]]; then
+  commit_sha="$(cat ci-commit-override)"
+  log-info "Overriding commit sha with $commit_sha from ci-commit-override"
+fi
+
 if [ -n "$DEPLOY_DOCKER_IMAGE" ]; then
   log-info "Deploying image to Dokku Host"
   ssh "$ssh_remote" -- git:from-image "$remote_app_name" "$DEPLOY_DOCKER_IMAGE" "$DEPLOY_USER_NAME" "$DEPLOY_USER_EMAIL"
