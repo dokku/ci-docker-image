@@ -78,6 +78,8 @@ if [ -n "$REVIEW_APP_NAME" ] && [ "$app_name" != "$REVIEW_APP_NAME" ]; then
   GIT_REMOTE_URL="${GIT_REMOTE_URL%"/$app_name"}/${REVIEW_APP_NAME}"
 fi
 
+git config --global --add safe.directory "$PWD"
+
 if [ -f "bin/ci-pre-deploy" ]; then
   log-info "Executing bin/ci-pre-deploy script"
   chmod +x bin/ci-pre-deploy
@@ -89,7 +91,6 @@ if [ -n "$DEPLOY_DOCKER_IMAGE" ]; then
   ssh "$ssh_remote" -- git:from-image "$remote_app_name" "$DEPLOY_DOCKER_IMAGE" "$DEPLOY_USER_NAME" "$DEPLOY_USER_EMAIL"
 else
   log-info "Pushing to Dokku Host"
-  git config --global --add safe.directory "$PWD"
   # shellcheck disable=SC2086
   git push $GIT_PUSH_FLAGS "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
 fi
