@@ -1,0 +1,8 @@
+#!/bin/sh -l
+set -e
+
+setup-ssh
+app_name="$(parse-app-name)"
+ssh_remote="ssh://dokku@$(parse-ssh-host):$(parse-ssh-port)"
+
+ssh "$ssh_remote" -- run "$app_name" $@
