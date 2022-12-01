@@ -1,6 +1,10 @@
 #!/bin/sh -l
 set -e
 
+if [ -n "$TRACE" ]; then
+  set -x
+fi
+
 value="$CI_BRANCH_NAME"
 if [ -n "$CI_BRANCH_NAME" ]; then
   true
