@@ -1,6 +1,10 @@
 #!/bin/sh -l
 set -e
 
+if [ -n "$TRACE" ]; then
+  set -x
+fi
+
 if [ -n "$PLUGIN_GIT_REMOTE_URL" ]; then
   export GIT_REMOTE_URL="$PLUGIN_GIT_REMOTE_URL"
 fi

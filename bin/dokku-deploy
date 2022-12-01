@@ -1,6 +1,10 @@
 #!/bin/sh -l
 set -e
 
+if [ -n "$TRACE" ]; then
+  set -x
+fi
+
 if [ -n "$PLUGIN_BRANCH" ]; then
   export BRANCH="$PLUGIN_BRANCH"
 fi

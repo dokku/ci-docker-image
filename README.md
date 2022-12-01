@@ -87,6 +87,10 @@ The following environment variables are supported:
 - `SSH_PRIVATE_KEY`:
   - description: A private SSH key that has push acces to your Dokku instance
   - required: true
+- `TRACE`:
+  - description: Allows users to debug what the action is performing by enabling shell trace mode
+  - required: false
+  - default: ''
 
 ### Hooks
 

@@ -1,6 +1,10 @@
 #!/bin/sh -l
 set -e
 
+if [ -n "$TRACE" ]; then
+  set -x
+fi
+
 value="$CI_COMMIT"
 if [ -n "$CI_COMMIT" ]; then
   true
