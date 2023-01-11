@@ -50,7 +50,7 @@ jobs:
     if: needs.push-enabled.outputs.push-enabled == 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Generate docker metadata
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677  # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
