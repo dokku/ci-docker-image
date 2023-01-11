@@ -14,4 +14,4 @@ if [ -z "$ssh_port" ]; then
   ssh_port=22
 fi
 
-echo $ssh_port
+echo "$ssh_port"
