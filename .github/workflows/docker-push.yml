@@ -40,8 +40,8 @@ jobs:
             echo -e "\u001b[32mDetected success lint workflow_run conclusion\u001b[0m"
           fi
 
-          echo "::set-output name=push-enabled::${push_enabled}"
-          echo "::set-output name=docker-image-tag::${image_tag}"
+          run: echo "push-enabled=${push_enabled}" >> $GITHUB_OUTPUT
+          run: echo "docker-image-tag=${image_tag}" >> $GITHUB_OUTPUT
 
   docker-push:
     name: push latest
