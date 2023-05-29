@@ -5,8 +5,12 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    labels:
+      - "type: dependencies"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: daily
     open-pull-requests-limit: 10
+    labels:
+      - "type: dependencies"
