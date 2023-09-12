@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Generate docker metadata
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@818d4b7b91585d195f67373fd9cb0332e31a7175  # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        uses: crazy-max/ghaction-docker-meta@96383f45573cb7f253c731d3b3ab81c87ef81934  # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
         with:
           images: dokku/ci-docker-image
       - name: Set up QEMU
