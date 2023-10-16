@@ -28,6 +28,7 @@ jobs:
         run: |
           image_tag=latest
           push_enabled=false
+          is_tagged=false
           if [[ '${{ github.event.workflow_run.head_branch }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.event.workflow_run.head_branch }}'
@@ -39,16 +40,21 @@ jobs:
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.ref_name }}'
             push_enabled=true
+            is_tagged=true
           else
             echo "::warning ::Unable to detect semver tag or master branch"
             push_enabled=false
           fi
 
-          if [[ '${{ github.event.workflow_run.conclusion }}' != 'success' ]]; then
-            echo "::warning ::Unable to detect successful lint workflow_run conclusion"
-            push_enabled=false
+          if [[ "$is_tagged" == "true" ]]; then
+            echo -e "\u001b[32mSkipping lint workflow_run check\u001b[0m"
           else
-            echo -e "\u001b[32mDetected success lint workflow_run conclusion\u001b[0m"
+            if [[ '${{ github.event.workflow_run.conclusion }}' != 'success' ]]; then
+              echo "::warning ::Unable to detect successful lint workflow_run conclusion"
+              push_enabled=false
+            else
+              echo -e "\u001b[32mDetected success lint workflow_run conclusion\u001b[0m"
+            fi
           fi
 
           echo "push-enabled=${push_enabled}" >> $GITHUB_OUTPUT
