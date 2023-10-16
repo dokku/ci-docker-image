@@ -8,7 +8,7 @@ on:
     types:
       - completed
   push:
-    tags:        
+    tags:
       - '*'
 
 concurrency:
@@ -34,6 +34,10 @@ jobs:
             push_enabled=true
           elif [[ '${{ github.event.workflow_run.head_branch }}' == "master" ]]; then
             echo -e "\u001b[32mDetected master branch\u001b[0m"
+            push_enabled=true
+          elif [[ '${{github.ref_name}}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo -e "\u001b[32mDetected semver tag\u001b[0m"
+            image_tag='${{ github.ref_name }}'
             push_enabled=true
           else
             echo "::warning ::Unable to detect semver tag or master branch"
