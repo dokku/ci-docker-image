@@ -19,6 +19,12 @@ echo "$SSH_PRIVATE_KEY" | tr -d '\r' >/root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 chmod 700 /root/.ssh
 
+if [ ! -s /root/.ssh/id_rsa ]; then
+  log-error "No private ssh key found"
+  log-error "Ensure SSH_PRIVATE_KEY environment variable has your ssh private key as its contents"
+  exit 1
+fi
+
 if [ -n "$SSH_HOST_KEY" ]; then
   log-info "Adding SSH_HOST_KEY to known_hosts"
   echo "$SSH_HOST_KEY" >>"/root/.ssh/known_hosts"
