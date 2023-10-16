@@ -8,6 +8,10 @@ on:
     types:
       - completed
 
+concurrency:
+  group: docker-push-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   push-enabled:
     name: push-enabled

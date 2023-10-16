@@ -8,6 +8,10 @@ on:
       - master
   pull_request:
 
+concurrency:
+  group: trivy-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   trivy-analysis:
     name: trivy-analysis
