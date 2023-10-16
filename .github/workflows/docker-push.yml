@@ -7,6 +7,9 @@ on:
     workflows: ["lint"]
     types:
       - completed
+  push:
+    tags:        
+      - '*'
 
 concurrency:
   group: docker-push-${{ github.event.pull_request.number || github.ref }}
