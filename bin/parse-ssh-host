@@ -1,12 +1,50 @@
-#!/bin/sh -l
-set -e
+#!/usr/bin/python3
 
-if [ -n "$TRACE" ]; then
-  set -x
-fi
+import ipaddress
+import os
+import sys
+import urllib.parse
 
-if [ -n "$PLUGIN_GIT_REMOTE_URL" ]; then
-  export GIT_REMOTE_URL="$PLUGIN_GIT_REMOTE_URL"
-fi
 
-echo "$GIT_REMOTE_URL" | sed -e 's/.*@//' -e 's/[:/].*//'
+def is_ipv6(ip):
+    """
+    Returns True if the ip is an IPv6 address
+    """
+    try:
+        return isinstance(ipaddress.ip_address(ip), ipaddress.IPv6Address)
+    except ValueError:
+        print(f"Invalid IP address: {ip}", file=sys.stderr)
+        return False
+
+
+def main():
+    """
+    Prints out the host of the git remote url
+    """
+    git_remote_url = os.getenv("GIT_REMOTE_URL")
+    if os.getenv("PLUGIN_GIT_REMOTE_URL"):
+        git_remote_url = os.getenv("PLUGIN_GIT_REMOTE_URL")
+
+    if not git_remote_url:
+        print("GIT_REMOTE_URL is empty", file=sys.stderr)
+        sys.exit(1)
+
+    u = urllib.parse.urlparse(git_remote_url)
+    host = u.hostname
+    if is_ipv6(host):
+        host = f"[{host}]"
+    print(host)
+
+
+if __name__ == "__main__":
+    main()
+
+# if [ -n "$TRACE" ]; then
+#   set -x
+# fi
+
+# if [ -n "$PLUGIN_GIT_REMOTE_URL" ]; then
+#   export GIT_REMOTE_URL="$PLUGIN_GIT_REMOTE_URL"
+# fi
+
+# echo "$GIT_REMOTE_URL" | sed -e 's/.*@//' -e 's/[:/].*//'

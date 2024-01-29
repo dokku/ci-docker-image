@@ -1,17 +1,29 @@
-#!/bin/sh -l
-set -e
+#!/usr/bin/python3
 
-if [ -n "$TRACE" ]; then
-  set -x
-fi
+import os
+import sys
+import urllib.parse
 
-if [ -n "$PLUGIN_GIT_REMOTE_URL" ]; then
-  export GIT_REMOTE_URL="$PLUGIN_GIT_REMOTE_URL"
-fi
 
-ssh_port="$(echo "$GIT_REMOTE_URL" | sed -e 's/.*@//' -e 's/\/.*//' -ne 's/.*:\([0-9]*\)/\1/p')"
-if [ -z "$ssh_port" ]; then
-  ssh_port=22
-fi
+def main():
+    """
+    Prints out the port of the git remote url
+    """
+    git_remote_url = os.getenv("GIT_REMOTE_URL")
+    if os.getenv("PLUGIN_GIT_REMOTE_URL"):
+        git_remote_url = os.getenv("PLUGIN_GIT_REMOTE_URL")
 
-echo "$ssh_port"
+    if not git_remote_url:
+        print("GIT_REMOTE_URL is empty", file=sys.stderr)
+        sys.exit(1)
+
+    u = urllib.parse.urlparse(git_remote_url)
+    port = "22"
+    if u.port:
+        port = u.port
+
+    print(port)
+
+
+if __name__ == "__main__":
+    main()
