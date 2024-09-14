@@ -22,6 +22,7 @@ jobs:
     outputs:
       push-enabled: ${{ steps.check.outputs.push-enabled }}
       docker-image-tag: ${{ steps.check.outputs.docker-image-tag }}
+      is-tagged: ${{ steps.check.outputs.is-tagged }}
     steps:
       - name: Check if push allowed
         id: check
@@ -60,6 +61,7 @@ jobs:
           {
             echo "push-enabled=${push_enabled}"
             echo "docker-image-tag=${image_tag}"
+            echo "is-tagged=${is_tagged}"
           } >>"$GITHUB_OUTPUT"
 
   docker-push:
@@ -97,3 +99,8 @@ jobs:
             org.opencontainers.image.version=${{ github.event.workflow_run.head_branch }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      - name: Create Release
+        if: needs.push-enabled.outputs.is-tagged == 'true'
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
