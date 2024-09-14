@@ -34,8 +34,8 @@ jobs:
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.event.workflow_run.head_branch }}'
             push_enabled=true
-          elif [[ '${{ github.event.workflow_run.head_branch }}' == "master" ]]; then
-            echo -e "\u001b[32mDetected master branch\u001b[0m"
+          elif [[ '${{ github.event.workflow_run.head_branch }}' == "main" ]]; then
+            echo -e "\u001b[32mDetected main branch\u001b[0m"
             push_enabled=true
           elif [[ '${{github.ref_name}}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
@@ -43,7 +43,7 @@ jobs:
             push_enabled=true
             is_tagged=true
           else
-            echo "::warning ::Unable to detect semver tag or master branch"
+            echo "::warning ::Unable to detect semver tag or main branch"
             push_enabled=false
           fi
 
