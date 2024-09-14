@@ -36,7 +36,7 @@ jobs:
             push_enabled=true
           elif [[ '${{ github.event.workflow_run.head_branch }}' == "main" ]]; then
             echo -e "\u001b[32mDetected main branch\u001b[0m"
-            push_enabled=true
+            push_enabled=false
           elif [[ '${{github.ref_name}}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.ref_name }}'
