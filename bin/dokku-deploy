@@ -90,7 +90,7 @@ if [ -f "bin/ci-pre-deploy" ]; then
   APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-pre-deploy
 fi
 
-if [[ -f ci-commit-override ]]; then
+if [ -f ci-commit-override ]; then
   commit_sha="$(cat ci-commit-override)"
   log-info "Overriding commit sha with $commit_sha from ci-commit-override"
 fi
