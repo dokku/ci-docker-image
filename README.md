@@ -94,19 +94,41 @@ The following environment variables are supported:
 
 ### Hooks
 
-#### bin/ci-pre-deploy
+This image allows a variety of file-based hooks to be triggered during the app
+deploy process. These hooks should be executables relative to the current working
+directory in which `dokku-deploy` script is executed - typically your repository root.
 
-If the file `bin/ci-pre-deploy` exists, it will be triggered after any app setup
-but before the app is deployed. This can be used to preconfigure the remote
-app prior to the actual deploy, but within the context of the SSH setup. The
-following environment variables are available for usage in the script:
+The following environment variables are available for usage in the script:
 
 - `APP_NAME`: The name of the remote app that will be deployed. This takes
 the parsed GIT_REMOTE_URL and REVIEW_APP_NAME into account.
 - `IS_REVIEW_APP`: `true` if a review app is being deployed, `false` otherwise.
 - `SSH_REMOTE`: The parsed ssh remote url.
 
-The following is an example `bin/ci-pre-deploy` file:
+The simplest hook is a shell script like so:
+
+```shell
+#!/bin/sh -l
+
+echo "hello world"
+```
+
+> [!NOTE]
+> The Docker image in use by this repository currently only supports `sh` as
+> the interpreter. If another interpreter is desired, it should be added to the
+> environment manually.
+
+To execute remote dokku commands, the `ssh` binary can be executed like so:
+
+```shell
+#!/bin/sh -l
+
+ssh "$SSH_REMOTE" -- version
+```
+
+Additionally, if a Dokku command should be executed _only_ for review apps,
+the `IS_REVIEW_APP` variable can be checked for the value `true` to wrap
+review app-specific logic:
 
 ```shell
 #!/bin/sh -l
@@ -115,6 +137,13 @@ if [ "$IS_REVIEW_APP" = "true" ]; then
   echo "configured the review app domain"
 fi
 ```
+
+The following hooks are available:
+
+- `bin/ci-pre-deploy`: Triggered after any app setup but before the app is deployed
+- `bin/ci-post-deploy`: Triggered after the app is deployed
+- `bin/ci-pre-review-app-destroy`: Triggered before a review app is destroyed
+- `bin/ci-post-review-app-destroy`: Triggered after a review app is deployed
 
 ## Building
 

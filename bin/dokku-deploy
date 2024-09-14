@@ -54,8 +54,21 @@ if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy'
 fi
 
 if [ "$COMMAND" = "review-apps:destroy" ]; then
+  if [ -f "bin/ci-pre-review-app-destroy" ]; then
+    log-info "Executing bin/ci-pre-review-app-destroy script"
+    chmod +x bin/ci-pre-review-app-destroy
+    APP_NAME="$REVIEW_APP_NAME" IS_REVIEW_APP="true" SSH_REMOTE="$ssh_remote" bin/ci-pre-review-app-destroy
+  fi
+
   log-info "Destroying review app '${REVIEW_APP_NAME}'"
   ssh "$ssh_remote" -- --force apps:destroy "$REVIEW_APP_NAME"
+
+  if [ -f "bin/ci-post-review-app-destroy" ]; then
+    log-info "Executing bin/ci-post-review-app-destroy script"
+    chmod +x bin/ci-post-review-app-destroy
+    APP_NAME="$REVIEW_APP_NAME" IS_REVIEW_APP="true" SSH_REMOTE="$ssh_remote" bin/ci-post-review-app-destroy
+  fi
+
   exit 0
 fi
 
@@ -102,4 +115,10 @@ else
   log-info "Pushing to Dokku Host"
   # shellcheck disable=SC2086
   git push $GIT_PUSH_FLAGS "$GIT_REMOTE_URL" "$commit_sha:refs/heads/$BRANCH"
+fi
+
+if [ -f "bin/ci-post-deploy" ]; then
+  log-info "Executing bin/ci-post-deploy script"
+  chmod +x bin/ci-post-deploy
+  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-post-deploy
 fi
