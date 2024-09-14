@@ -99,8 +99,16 @@ jobs:
             org.opencontainers.image.version=${{ github.event.workflow_run.head_branch }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+
       - name: Create Release
         if: needs.push-enabled.outputs.is-tagged == 'true'
         uses: softprops/action-gh-release@v2
         with:
           generate_release_notes: true
+
+      - name: Update Docker Hub Description
+        uses: peter-evans/dockerhub-description@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: peterevans/dockerhub-description
