@@ -38,6 +38,14 @@ else
   chmod 600 "/root/.ssh/known_hosts"
 fi
 
+if [ -n "$SSH_PASSPRHASE" ]; then
+  export SSH_ASKPASS="/root/.ssh/askpass.sh"
+  export SSH_ASKPASS_REQUIRE=force
+  # shellcheck disable=SC2016
+  printf '#!/bin/sh\necho "$SSH_PASSPRHASE"\n' >"$SSH_ASKPASS"
+  chmod +x "$SSH_ASKPASS"
+fi
+
 log-info "Adding SSH Key to ssh-agent"
 eval "$(ssh-agent -s)"
 ssh-add /root/.ssh/id_rsa
