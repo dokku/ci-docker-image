@@ -13,7 +13,8 @@ def is_ipv6(ip):
     try:
         return isinstance(ipaddress.ip_address(ip), ipaddress.IPv6Address)
     except ValueError:
-        print(f"Invalid IP address: {ip}", file=sys.stderr)
+        if os.getenv("TRACE") != "':
+            print(f"Invalid IP address: {ip}", file=sys.stderr)
         return False
 
 
