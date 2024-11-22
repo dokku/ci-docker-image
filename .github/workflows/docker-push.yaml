@@ -75,7 +75,7 @@ jobs:
 
       - name: Generate docker metadata
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@8e5442c4ef9f78752691e2d8f8d19755c6f78e81 # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
+        uses: crazy-max/ghaction-docker-meta@369eb591f429131d6889c46b94e711f089e6ca96 # v1.8.5 => c53f88523ad1fcebbdb10b3bb9cfa7ddb69d6677
         with:
           images: dokku/ci-docker-image
 
