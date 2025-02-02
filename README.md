@@ -71,7 +71,7 @@ The following environment variables are supported:
   - required: false
   - default: ''
 - `GIT_REMOTE_URL:`
-  - description: The dokku app's git repository url (in SSH format)
+  - description: The dokku app's git repository url (in SSH format, see below)
   - required: true
 - `GIT_PUSH_FLAGS:`
   - description: A string containing a set of flags to set on push
@@ -95,6 +95,26 @@ The following environment variables are supported:
   - description: Allows users to debug what the action is performing by enabling shell trace mode
   - required: false
   - default: ''
+
+### `GIT_REMOTE_URL` SSH Format
+
+The `GIT_REMOTE_URL` value should be specified in SSH Format, as shown below:
+
+```shell
+# without port specified
+ssh://dokku@dokku.me/node-js-app
+
+# with the optional port specified
+ssh://dokku@dokku.me:22/node-js-app
+
+# generalized form
+ssh://dokku@HOSTNAME:PORT/APP_NAME
+```
+
+This format mimics the DSN format. It is similar to the one in use by a normal `git push dokku main` command, though with a change on how the app name is separated by a slash from the rest of the hostname. The port is completely optional, but allows users to rebind the SSH server to another port as necessary.
+
+> [!IMPORTANT]
+> The SSH key _must_ be added to the dokku user via the `dokku ssh-keys:add` command and _not_ manually or the app name will not be properly detected.
 
 ### Hooks
 
