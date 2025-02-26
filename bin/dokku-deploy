@@ -82,8 +82,10 @@ if [ -z "$commit_sha" ]; then
   exit 1
 fi
 
+is_review_app_create=false
 if [ "$COMMAND" = "review-apps:create" ]; then
   log-info "Ensuring review app '${REVIEW_APP_NAME}' exists"
+  is_review_app_create=true
   ssh "$ssh_remote" -- apps:clone --skip-deploy --ignore-existing "$app_name" "$REVIEW_APP_NAME"
 fi
 
@@ -100,7 +102,7 @@ git config --global --add safe.directory "$PWD"
 if [ -f "bin/ci-pre-deploy" ]; then
   log-info "Executing bin/ci-pre-deploy script"
   chmod +x bin/ci-pre-deploy
-  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-pre-deploy
+  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" IS_REVIEW_APP_CREATE="$is_review_app_create" SSH_REMOTE="$ssh_remote" bin/ci-pre-deploy
 fi
 
 if [ -f ci-commit-override ]; then
@@ -120,5 +122,5 @@ fi
 if [ -f "bin/ci-post-deploy" ]; then
   log-info "Executing bin/ci-post-deploy script"
   chmod +x bin/ci-post-deploy
-  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" SSH_REMOTE="$ssh_remote" bin/ci-post-deploy
+  APP_NAME="$remote_app_name" IS_REVIEW_APP="$is_review_app" IS_REVIEW_APP_CREATE="$is_review_app_create" SSH_REMOTE="$ssh_remote" bin/ci-post-deploy
 fi
