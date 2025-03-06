@@ -167,7 +167,7 @@ The following hooks are available:
 - `bin/ci-pre-deploy`: Triggered after any app setup but before the app is deployed
 - `bin/ci-post-deploy`: Triggered after the app is deployed
 - `bin/ci-pre-review-app-destroy`: Triggered before a review app is destroyed
-- `bin/ci-post-review-app-destroy`: Triggered after a review app is deployed
+- `bin/ci-post-review-app-destroy`: Triggered after a review app is destroyed
 
 ## Building
 
