@@ -24,7 +24,7 @@ elif [ -n "$GITHUB_SHA" ]; then
   # github actions
   value="$GITHUB_SHA"
 elif [ -n "$CI_COMMIT_SHA" ]; then
-  # gitlab-ci
+  # gitlab-ci and woodpecker ci
   value="$CI_COMMIT_SHA"
 elif [ -n "$SEMAPHORE_GIT_SHA" ]; then
   # semaphoreci

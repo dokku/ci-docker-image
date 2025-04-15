@@ -17,6 +17,7 @@ detected:
 - [gitlab-ci](https://about.gitlab.com/stages-devops-lifecycle/continuous-integration/)
 - [semaphoreci](https://semaphoreci.com/)
 - [travisci](https://travis-ci.com/)
+- [woodpecker ci](https://woodpecker-ci.org/)
 
 ## Usage
 

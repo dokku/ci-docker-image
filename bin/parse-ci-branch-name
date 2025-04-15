@@ -32,6 +32,9 @@ elif [ -n "$SEMAPHORE_GIT_BRANCH" ]; then
 elif [ -n "$TRAVIS_BRANCH" ]; then
   # travisci
   value="$TRAVIS_BRANCH"
+elif [ -n "$CI_COMMIT_BRANCH" ]; then
+  # woodpecker ci
+  value="$CI_COMMIT_BRANCH"
 else
   exit 0
 fi
