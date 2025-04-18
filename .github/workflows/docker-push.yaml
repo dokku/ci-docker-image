@@ -18,7 +18,7 @@ concurrency:
 jobs:
   push-enabled:
     name: push-enabled
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     outputs:
       push-enabled: ${{ steps.check.outputs.push-enabled }}
       docker-image-tag: ${{ steps.check.outputs.docker-image-tag }}
@@ -66,7 +66,7 @@ jobs:
 
   docker-push:
     name: push latest
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     needs: push-enabled
     if: needs.push-enabled.outputs.push-enabled == 'true'
     steps:
