@@ -1,6 +1,6 @@
-FROM alpine:3.21.3
+FROM alpine:3.22.0
 
-RUN apk --no-cache add git==2.47.2-r0 python3==3.12.10-r0 openssh==9.9_p2-r0 && \
+RUN apk --no-cache add git==2.49.0-r0 python3==3.12.10-r1 openssh==10.0_p1-r7 && \
     mkdir -p ~/.ssh
 
 COPY bin /bin
