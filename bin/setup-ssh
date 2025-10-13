@@ -15,7 +15,13 @@ fi
 log-info "Setting up SSH Key"
 
 mkdir -p /root/.ssh
-echo "$SSH_PRIVATE_KEY" | tr -d '\r' >/root/.ssh/id_rsa
+if [ -n "$SSH_PRIVATE_KEY" ]; then
+  echo "$SSH_PRIVATE_KEY" | tr -d '\r' >/root/.ssh/id_rsa
+elif [ -n "$PLUGIN_SSH_PRIVATE_KEY_BASE64" ]; then
+  echo "$PLUGIN_SSH_PRIVATE_KEY_BASE64" | base64 -d >/root/.ssh/id_rsa
+elif [ -n "$SSH_PRIVATE_KEY_BASE64" ]; then
+  echo "$SSH_PRIVATE_KEY_BASE64" | base64 -d >/root/.ssh/id_rsa
+fi
 chmod 600 /root/.ssh/id_rsa
 chmod 700 /root/.ssh
 

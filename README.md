@@ -86,7 +86,10 @@ The following environment variables are supported:
   - required: false
   - default: ''
 - `SSH_PRIVATE_KEY`:
-  - description: A private SSH key that has push acces to your Dokku instance
+  - description: A private SSH key that has push access to your Dokku instance. Takes precedence over `SSH_PRIVATE_KEY_BASE64`.
+  - required: true
+- `SSH_PRIVATE_KEY_BASE64`:
+  - description: A base64-encoded private SSH key that has push access to your Dokku instance
   - required: true
 - `SSH_PASSPHRASE`:
   - description: If set, the passphrase to use when interacting with an SSH key that has a passphrase
