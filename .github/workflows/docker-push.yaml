@@ -71,7 +71,7 @@ jobs:
     if: needs.push-enabled.outputs.push-enabled == 'true'
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Generate docker metadata
         id: docker_meta
