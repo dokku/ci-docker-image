@@ -1,6 +1,6 @@
 # ci-docker-image
 
-[![dokku/ci-docker-image](http://dockeri.co/image/dokku/ci-docker-image)](https://registry.hub.docker.com/r/dokku/ci-docker-image)
+[![Docker Image Version](https://img.shields.io/docker/v/dokku/ci-docker-image)](https://registry.hub.docker.com/r/dokku/ci-docker-image)
 
 A Docker image meant for use with CI/CD pipelines
 
