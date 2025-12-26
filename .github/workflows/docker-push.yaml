@@ -33,10 +33,8 @@ jobs:
           if [[ '${{ github.event.workflow_run.head_branch }}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.event.workflow_run.head_branch }}'
-            push_enabled=true
           elif [[ '${{ github.event.workflow_run.head_branch }}' == "main" ]]; then
             echo -e "\u001b[32mDetected main branch\u001b[0m"
-            push_enabled=false
           elif [[ '${{github.ref_name}}' =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
             echo -e "\u001b[32mDetected semver tag\u001b[0m"
             image_tag='${{ github.ref_name }}'
@@ -44,7 +42,6 @@ jobs:
             is_tagged=true
           else
             echo "::warning ::Unable to detect semver tag or main branch"
-            push_enabled=false
           fi
 
           if [[ "$is_tagged" == "true" ]]; then
@@ -97,7 +94,9 @@ jobs:
         with:
           push: ${{ needs.push-enabled.outputs.is-tagged == 'true' }}
           platforms: linux/amd64,linux/arm64,linux/arm/v7
-          tags: dokku/ci-docker-image:${{ needs.push-enabled.outputs.docker-image-tag }}
+          tags: |
+            dokku/ci-docker-image:${{ needs.push-enabled.outputs.docker-image-tag }}
+            dokku/ci-docker-image:latest
           labels: |
             ${{ steps.docker_meta.outputs.labels }}
             org.opencontainers.image.version=${{ github.event.workflow_run.head_branch }}
