@@ -40,6 +40,14 @@ commit_sha="$(parse-ci-commit)"
 app_name="$(parse-app-name)"
 ssh_remote="ssh://dokku@$(parse-ssh-host):$(parse-ssh-port)"
 
+if [ -n "$TRACE" ]; then
+  log-info "Listing repository contents"
+  ls -lah
+
+  log-info "Listing bin directory for available hooks"
+  ls -lah bin || true
+fi
+
 if [ "$COMMAND" = "review-apps:create" ] || [ "$COMMAND" = 'review-apps:destroy' ]; then
   if [ -z "$REVIEW_APP_NAME" ]; then
     CI_BRANCH_NAME="$(parse-ci-branch-name)"
