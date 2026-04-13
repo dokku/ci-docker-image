@@ -106,7 +106,7 @@ jobs:
 
       - name: Create Release
         if: needs.push-enabled.outputs.is-tagged == 'true'
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           generate_release_notes: true
 
