@@ -22,7 +22,7 @@ jobs:
       - name: Clone
         uses: actions/checkout@v7
       - name: Run hadolint
-        uses: hadolint/hadolint-action@2332a7b74a6de0dda2e2221d575162eba76ba5e5
+        uses: hadolint/hadolint-action@2a66e89f53d0771bb131a7fa31f3136336094aa6
         # v1.5.0 => c27bd9edc1e95eed30474db8f295ff5807ebca14
 
   markdown-lint:
